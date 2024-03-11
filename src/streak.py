@@ -15,8 +15,8 @@ class Streak:
         self.end_date = datetime.now()
 
     def to_json(self):
-        return json.dumps({
+        return {
             "entry_count": str(self.entry_count),
             "start_date": self.start_date.isoformat(),
-            "end_date": self.end_date.isoformat()
-        })
+            "end_date": self.end_date.isoformat() if (self.end_date is not None) else "None"
+        }
