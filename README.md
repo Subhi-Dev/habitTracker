@@ -15,12 +15,29 @@ A Python program with a Command-line interface that allows Habit tracking. Easil
 ## Installation
 
 Clone the repository by downloading it and run a terminal
-```bash
+```shell
 pip install -r requirements
 ```
 
-## Running
+## Usage
 
-```bash
-python .
+Run the following command in the project root directory (The same directory for this README)
+```shell
+python main.py
+```
+Note that you must run this in an interactive terminal
+
+You will be presented with a number of actions to perform, You can:
+    
+- View all habits: Shows all active habits
+- Add a habit: Creates a new habit
+- Edit a habit: Change a specific property of a habit
+- Check-off a habit: adds an entry to a selected habit 
+- Analyze habits: Gives a choice of interesting stats to calculate
+
+## Testing
+
+If you want to contribute or modify to this application, use the following command to automatically check basic functionality
+```shell
+pytest tests
 ```

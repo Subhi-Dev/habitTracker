@@ -1,13 +1,10 @@
 import json
 import os
 
-import questionary
 from datetime import datetime, timedelta
+import questionary
 
-from habit import Habit
-
-# TODO: validate timespan < 24 hours
-# TODO: allow user to chose day of the week
+from src.habit import Habit
 
 
 def chose_habit():
@@ -125,7 +122,7 @@ def main_menu():
         if analysis_choice == "Longest streak of a habit":
             habit_json = chose_habit()
             habit_class = Habit.from_json(json.dumps(habit_json))
-            print("Your highest streak is ", habit_class.return_largest_streak())
+            print("Your highest streak is ", habit_class.return_largest_streak)
             questionary.press_any_key_to_continue().ask()
             main_menu()
         elif analysis_choice == "Habit ordered based on streak":
@@ -148,6 +145,3 @@ def main_menu():
 
     elif choice == "Exit":
         exit()
-
-
-main_menu()

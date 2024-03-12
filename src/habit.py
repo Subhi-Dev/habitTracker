@@ -1,12 +1,16 @@
 import os
 import json
 
-from datetime import datetime, timedelta, date
+from datetime import datetime, timedelta
 
 from src.streak import Streak
 
 
 class Habit:
+    """The main habit class
+    is responsible for the management of habits conversion to json except for streaks
+    and the file saving mechanism
+    """
     dirname = os.path.dirname(__file__)
     _JSON_FILE = os.path.join(dirname, '../save/user.json')
 
@@ -30,7 +34,10 @@ class Habit:
         self.timespan = timespan
 
     def add_entry(self, entry_date=datetime.now()):
-        """Adds a new entry to the habit."""
+        """Adds a new entry to the habit.
+        :param entry_date: datetime, used for overriding the entry date in testing
+        ,defaults to datetime.now()
+        """
         if abs(datetime.combine(entry_date.date(), self.target_time) - entry_date) > self.timespan:
             print("You can not check-off now, you must check-off your habit within "
                   + str(self.timespan.seconds // 3600) + " hours of " + str(self.target_time))
@@ -39,7 +46,7 @@ class Habit:
             streak = Streak(entry_count=1, start_date=entry_date)
             self.streaks.append(streak)
             self.last_entry_date = entry_date
-        elif entry_date - self.last_entry_date <= (timedelta(days=self.interval_in_days) + self.timespan):
+        elif entry_date.date() - self.last_entry_date.date() <= (timedelta(days=self.interval_in_days)):
             print("You checked-off your habit!, see you next time")
             self.streaks[-1].add_entry()
             self.last_entry_date = entry_date
@@ -65,6 +72,10 @@ class Habit:
 
     @classmethod
     def interval_to_periodicity(cls, interval):
+        """Converts the Interval in days to a Periodicity
+        Example: interval of 1 day is a periodicity of "Daily"
+        :param interval: integer Interval in days
+        """
         if interval == 1:
             return "Daily"
         elif interval == 7:
@@ -106,7 +117,9 @@ class Habit:
 
     @classmethod
     def validate_habit(cls, value):
-        """Validates the new habit name to prevent name duplicates"""
+        """Validates the new habit name to prevent name duplicates
+        :param value: The habit name to validate
+        """
         data = cls.get_all_data()
         for habit in data["habits"]:
             if habit["name"] == value:
