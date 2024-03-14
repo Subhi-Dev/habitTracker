@@ -35,6 +35,24 @@ You will be presented with a number of actions to perform, You can:
 - Check-off a habit: adds an entry to a selected habit 
 - Analyze habits: Gives a choice of interesting stats to calculate
 
+Then the application will guide you through the rest of the setup process
+
+### Sample Data Generation
+
+If you cloned the repository your ```save/user.json``` file must look like this
+
+```json
+{
+  "habit": []
+}
+```
+
+To generate the sample data proceed to run the following command in the project root
+```shell
+python generate_data.py
+```
+This will generate 5 habits (3 daily and 2 weekly) with 4 weeks of data each
+
 ## Testing
 
 If you want to contribute or modify to this application, use the following command to automatically check basic functionality
