@@ -50,8 +50,10 @@ def main_menu():
         print("Habits:")
         for habit in data["habits"]:
             periodicity = Habit.interval_to_periodicity(int(habit["interval_in_days"]))
-            data["target_time"] = datetime.strptime(habit["target_time"], "%H:%M:%S").strftime('%I:%M %p')
-            print(f"Habit: {habit['name']} | Periodicity: {periodicity} | Target Time: {data['target_time']}")
+            target_time = datetime.strptime(habit["target_time"], "%H:%M:%S").strftime('%I:%M %p')
+            print(f"Habit: {habit['name']} | Periodicity: {periodicity} "
+                  f"| Target Time: {target_time} "
+                  f"| Streak: {str(habit['streaks'][-1]["entry_count"]) if habit['streaks'] != [] else "None"}")
         questionary.press_any_key_to_continue().ask()
         main_menu()
     elif choice == "Add a habit":
@@ -122,7 +124,7 @@ def main_menu():
         if analysis_choice == "Longest streak of a habit":
             habit_json = chose_habit()
             habit_class = Habit.from_json(json.dumps(habit_json))
-            print("Your highest streak is ", habit_class.return_largest_streak)
+            print("Your highest streak is ", habit_class.return_largest_streak())
             questionary.press_any_key_to_continue().ask()
             main_menu()
         elif analysis_choice == "Habit ordered based on streak":
